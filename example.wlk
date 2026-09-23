@@ -1,9 +1,7 @@
-object pepita {
-  var energy = 100
 
-  method energy() = energy
 
-  method fly(minutes) {
-    energy = energy - minutes * 3
-  }
+object chevroletCorsa {
+  var capacidad actual = 4
+  var velocidadActual = 150
+  var peso actual = 1300
 }
