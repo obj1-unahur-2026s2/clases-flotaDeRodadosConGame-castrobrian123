@@ -27,33 +27,41 @@ class RenaultKwid {
 
     var tieneTanqueAdicional = false
 
-    var capacidad =
+    var capacidad = self.valorDeCapacidadSiHayTanque()
+
+    method valorDeCapacidadSiHayTanque(){
         if(tieneTanqueAdicional){
             return 4
         } else {
             return 3
         }
+    }
 
     method capacidad() = capacidad
 
-    var velocidadMaxima =
+    var velocidadMaxima = self.valorDeVelocidadMaximaSiHayTanque()
+
+    method valorDeVelocidadMaximaSiHayTanque(){
         if(tieneTanqueAdicional){
             return 120
         } else {
             return 110
         }
+    }
 
     method velocidadMaxima() = velocidadMaxima
 
     var peso = 1200
 
-    method peso() =
-        peso + 
+    method valorDePesoSiHayTanque(){
         if (tieneTanqueAdicional){
             return 150
         } else{
             return 0
         }
+    }
+
+    method peso() = peso + self.valorDePesoSiHayTanque()
 
 }
 
@@ -151,26 +159,20 @@ object motorBataton{
 
 const autoEspecial_1 =
     new ChevroletCorsa(
-        color = "azul",
-        capacidad = 5,
-        velocidadMaxima = 200,
-        peso = 2000
+        color = "azul",       //en el corsa es obligatorio asignarle un color
+        capacidad = 5,        //no es necesario asignar un dato por que ya tiene uno por defecto
+        velocidadMaxima = 200,//no es necesario asignar un dato por que ya tiene uno por defecto
+        peso = 2000           //no es necesario asignar un dato por que ya tiene uno por defecto
     )
 
-const autoEspecial_2 =
-    new RenaultKwid(
-        color = "azul",
-        capacidad = 5,
-        velocidadMaxima = 200,
-        peso = 2000
-    )
+const autoEspecial_2 = new RenaultKwid()
 
 const autoEspecial_3 =
     new Trafic(
-        color = "azul",
-        capacidad = 5,
-        velocidadMaxima = 200,
-        peso = 2000
+        color = "azul",       //no es necesario asignar un dato por que ya tiene uno por defecto
+        capacidad = 5,        //en la trafic es obligatorio asignarle una capacidad
+        velocidadMaxima = 200,//en la trafic es obligatorio asignarle una velocidad maxima 
+        peso = 2000           //no es necesario asignar un dato por que ya tiene uno por defecto
     )
 
 
