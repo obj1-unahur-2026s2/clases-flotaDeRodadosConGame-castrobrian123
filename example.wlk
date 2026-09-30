@@ -1,264 +1,152 @@
 
 class ChevroletCorsa {
+
     var color
-    var position
-    var posicionesRecorridas = []
-
-    method capacidad() = 4
-
-    method velocidadMaxima() = 150
-
-    method peso() = 1300
 
     method color() = color
 
-    method position() = position
+    var capacidad = 4
 
-    method cambiarColor(nuevoColor) {
-        color = nuevoColor
-    }
+    method capacidad() = capacidad
 
-    method cambiarPosicion(nuevaPosicion) {
-        position = nuevaPosicion
-        posicionesRecorridas.add(nuevaPosicion)
-    }
+    var velocidadMaxima = 150
 
-    method pasoPor(posicionBuscada) {
-        return posicionesRecorridas.contains(posicionBuscada)
-    }
+    method velocidadMaxima() = velocidadMaxima
 
-    method pasoPorFila(numero) {
-        return posicionesRecorridas.any({ posicion => posicion.x() == numero })
-    }
+    var peso = 1300
 
-    method recorrioFilas(listaDeNumeros) {
-        return listaDeNumeros.all({ numero => self.pasoPorFila(numero) })
-    }
+    method peso() = peso
 
-    method image() {
-        return color.image()
-    }
 }
 
 class RenaultKwid {
-    var tieneTanqueAdicional
+
+    var color = "azul"
+
+    method color() = color
+
+    var tieneTanqueAdicional = false
 
     method capacidad() {
-        if (tieneTanqueAdicional) {
-            return 3
-        } else {
+
+        if(tieneTanqueAdicional){
             return 4
+        } else {
+            return 3
         }
+
     }
 
     method velocidadMaxima() {
-        if (tieneTanqueAdicional) {
+        if(tieneTanqueAdicional){
             return 120
         } else {
             return 110
         }
     }
 
-    method peso() {
-        if (tieneTanqueAdicional) {
-            return 1350
-        } else {
-            return 1200
-        }
-    }
+    method peso() = 1200 + if (tieneTanqueAdicional) 150 else 0
 
-    method color() = azul //falta definir el objeto azul
-
-    method ponerTanque() {
-        tieneTanqueAdicional = true
-    }
-
-    method sacarTanque() {
-        tieneTanqueAdicional = false
-    }
 }
 
-object interiorComodo {
-    method capacidad() = 5
-    method peso() = 700
-}
+class Trafic {
 
-object interiorPopular {
-    method capacidad() = 12
-    method peso() = 1000
-}
+    var color = "blanco"
 
-object motorPulenta {
-    method velocidadMaxima() = 130
-    method peso() = 800
-}
+    method color() = color
 
-object motorBataton {
-    method velocidadMaxima() = 80
-    method peso() = 500
-}
-
-object trafic {
     var interior = interiorComodo
-    var motor = motorPulenta
 
-    method capacidad() = interior.capacidad()
+    method interior() = interior
 
-    method velocidadMaxima() = motor.velocidadMaxima()
-
-    method peso() {
-        return 4000 + interior.peso() + motor.peso()
-    }
-
-    method color() = blanco //falta definir el objeto blanco
-
-    method cambiarInterior(nuevoInterior) {
+    method cambiarInterior(nuevoInterior){
         interior = nuevoInterior
     }
 
-    method cambiarMotor(nuevoMotor) {
+    var motor = motorPulenta
+
+    method motor() = motor
+
+    method cambiarMotor(nuevoMotor){
         motor = nuevoMotor
     }
-}
 
-class AutoEspecial {
-    var capacidad
-    var velocidadMaxima
-    var peso
-    var color
+    //La capacidad de la Trafic es la del interior
+    //(significa la capacidad del interior que tiene alojado).
 
-    method capacidad() = capacidad
+    method capacidad() = self.interior().capacidad()
 
-    method velocidadMaxima() = velocidadMaxima
+    //La velocidad máxima es la que permite el motor
+    //(significa la velocidad maxima del motor que tiene alojado).
 
-    method peso() = peso
+    method velocidadMaxima() = self.motor().velocidadMaxima()
 
-    method color() = color
-}
+    //El peso es 4000 kg más el peso del interior más el del motor.
+    //(significa el peso del interior que tiene alojado mas 
+    // el peso del motor que tiene alojado)
 
-class Dependencia {
-    var empleados
-    var rodados = []
-    var pedidos = []
-
-    method agregarAFlota(rodado) {
-        rodados.add(rodado)
-    }
-
-    method quitarDeFlota(rodado) {
-        rodados.remove(rodado)
-    }
-
-    method pesoTotalFlota() {
-        return rodados.sum({ rodado => rodado.peso() })
-    }
-
-    method estaBienEquipada() {
-        return
-            rodados.size() >= 3 &&
-            rodados.all({ rodado => rodado.velocidadMaxima() >= 100 })
-    }
-
-    method capacidadTotalEnColor(colorBuscado) {
-        return rodados
-            .filter({ rodado => rodado.color() == colorBuscado })
-            .sum({ rodado => rodado.capacidad() })
-    }
-
-    method rodadoMasRapido() {
-        return rodados.max({ rodado => rodado.velocidadMaxima() })
-    }
-
-    method colorDelRodadoMasRapido() = self.rodadoMasRapido().color()
-
-    method capacidadFaltante() {
-        return empleados - rodados.sum({ rodado => rodado.capacidad() })
-    }
-
-    method esGrande() = empleados >= 40 && rodados.size() >= 5
-
+    method peso() = 4000 + self.interior().peso() + self.motor().peso()
     
+}
 
-    method agregarPedido(pedido) {
-        pedidos.add(pedido)
-    }
+object fabrica {
+    var almacen = []
 
-    method quitarPedido(pedido) {
-        pedidos.remove(pedido)
-    }
+    method almacen() = almacen
 
-    method totalPasajerosPedidos() {
-        return pedidos.sum({ pedido => pedido.cantidadPasajeros() })
-    }
-
-    method pedidosNoSatisfechos() {
-        return pedidos.filter({ pedido => not rodados.any({ rodado => pedido.puedeSerSatisfechoPor(rodado) }) })
-    }
-
-    method todosLosPedidosIncompatiblesCon(color) {
-        return pedidos.all({ pedido => pedido.esIncompatible(color) })
-    }
-
-    method relajarTodosLosPedidos() {
-        pedidos.forEach({ pedido => pedido.relajar() })
+    method agregarAuto(unAuto){
+        almacen.add(unAuto)
     }
 }
 
-class Pedido {
-    var distancia
-    var tiempoMaximo
-    var pasajeros
-    var coloresIncompatibles
+// interiores
 
-    method velocidadRequerida() = distancia / tiempoMaximo
+object interiorComodo {
 
-    method cantidadPasajeros() = pasajeros
+    method capacidad() = 5
 
-    method esIncompatible(color) = coloresIncompatibles.contains(color)
+    method peso() = 700
 
-    method puedeSerSatisfechoPor(rodado) {
-        return
-            rodado.velocidadMaxima() >= self.velocidadRequerida() + 10 &&
-            rodado.capacidad() >= pasajeros &&
-            not self.esIncompatible(rodado.color())
-    }
-
-    method acelerar() { //recordar que esto es un metodo de indicacion ya que no devuelve(return) nada a la consola
-        tiempoMaximo = tiempoMaximo - 1
-    }
-
-    method relajar() { //recordar que esto es un metodo de indicacion ya que no devuelve(return) nada a la consola
-        tiempoMaximo = tiempoMaximo + 1
-    }
 }
 
-object rojo {
-    method nombre() = "rojo"
-    method image() = "autoRojo.png"
+object interiorPopular {
+
+    method capacidad() = 12
+
+    method peso() = 1000
+
 }
 
-object azul {
-    method nombre() = "azul"
-    method image() = "autoAzul.png"
+// motores
+
+object motorPulenta {
+
+    method velocidadMaxima() = 130
+
+    method peso() = 800
+  
 }
 
-object verde {
-    method nombre() = "verde"
-    method image() = "autoVerde.png"
+object motorBataton{
+
+    method velocidadMaxima() = 500
+
+    method peso() = 80
+  
 }
 
-object beige {
-    method nombre() = "beige"
-    method image() = "autoBeige.png"
-}
+const autoEspecial_1 =
+    new ChevroletCorsa(
+        color = "azul",
+        capacidad = 5,
+        velocidadMaxima = 200,
+        peso = 2000
+    )
 
-object blanco {
-    method nombre() = "blanco"
-    method image() = "autoBlanco.png"
-}
-
-object negro {
-    method nombre() = "negro"
-    method image() = "autoNegro.png"
-}
-
+const autoEspecial_2 =
+    new Trafic(
+        //color = "azul",
+        capacidad = 5,
+        velocidadMaxima = 200,
+        peso = 2000
+    )
