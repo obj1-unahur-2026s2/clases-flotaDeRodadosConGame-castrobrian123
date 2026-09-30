@@ -74,10 +74,14 @@ class Trafic {
     //La capacidad de la Trafic es la del interior
     //(significa la capacidad del interior que tiene alojado).
 
+    var capacidad
+
     method capacidad() = self.interior().capacidad()
 
     //La velocidad máxima es la que permite el motor
     //(significa la velocidad maxima del motor que tiene alojado).
+
+    var velocidadMaxima
 
     method velocidadMaxima() = self.motor().velocidadMaxima()
 
@@ -85,7 +89,9 @@ class Trafic {
     //(significa el peso del interior que tiene alojado mas 
     // el peso del motor que tiene alojado)
 
-    method peso() = 4000 + self.interior().peso() + self.motor().peso()
+    var peso = 4000
+
+    method peso() = peso + self.interior().peso() + self.motor().peso()
     
 }
 
