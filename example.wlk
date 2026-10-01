@@ -171,6 +171,14 @@ object dependencia {
 
     method almacen() = almacen
 
+    var empleados = 0
+
+    method empleados() = empleados
+
+    method cambiarCantidadDeEmpleados(nuevaCantidad){
+        empleados = nuevaCantidad
+    }
+
     method agregarAFlota(unRodado){
         almacen.add(unRodado)
     }
@@ -186,12 +194,21 @@ object dependencia {
     method estaBienEquipada() = self.almacen().size() >= 3
 
     method capacidadTotalEnColor(unColor) {
-        return almacen.count({ unRodado => unRodado.capacidad() == unColor })
+        return almacen.find({ unRodado => unRodado.color() == unColor }).capacidad()
     }
 
     method colorDelRodadoMasRapido() {
         return almacen.max({ unRodado => unRodado.velocidadMaxima() }).color()
     }
+
+    method capacidadFaltante() {
+        return
+            almacen.sum({unRodado => unRodado.capacidad()}) -
+            self.empleados()
+    }
+
+    method esGrande() = self.empleados() >= 40 and self.almacen().size() >= 5
+
 }
 
 
