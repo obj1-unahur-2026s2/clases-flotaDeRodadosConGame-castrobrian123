@@ -111,16 +111,6 @@ class Trafic {
     
 }
 
-object fabrica {
-    var almacen = []
-
-    method almacen() = almacen
-
-    method agregarAuto(unAuto){
-        almacen.add(unAuto)
-    }
-}
-
 // interiores
 
 object interiorComodo {
@@ -158,21 +148,50 @@ object motorBataton{
 }
 
 const autoEspecial_1 =
-    new ChevroletCorsa(
-        color = "azul",       //en el corsa es obligatorio asignarle un color
-        capacidad = 5,        //no es necesario asignar un dato por que ya tiene uno por defecto
-        velocidadMaxima = 200,//no es necesario asignar un dato por que ya tiene uno por defecto
-        peso = 2000           //no es necesario asignar un dato por que ya tiene uno por defecto
-    )
+    new ChevroletCorsa(color ="violeta")
+//        color = "azul",       //en el corsa es obligatorio asignarle un color
+//        capacidad = 5,        //no es necesario asignar un dato por que ya tiene uno por defecto
+//        velocidadMaxima = 200,//no es necesario asignar un dato por que ya tiene uno por defecto
+//        peso = 2000           //no es necesario asignar un dato por que ya tiene uno por defecto
+//    )
 
 const autoEspecial_2 = new RenaultKwid()
 
 const autoEspecial_3 =
-    new Trafic(
-        color = "azul",       //no es necesario asignar un dato por que ya tiene uno por defecto
-        capacidad = 5,        //en la trafic es obligatorio asignarle una capacidad
-        velocidadMaxima = 200,//en la trafic es obligatorio asignarle una velocidad maxima 
-        peso = 2000           //no es necesario asignar un dato por que ya tiene uno por defecto
-    )
+    new Trafic(capacidad = 5,velocidadMaxima = 200)
+        //color = "azul",       //no es necesario asignar un dato por que ya tiene uno por defecto
+//        capacidad = 5,        //en la trafic es obligatorio asignarle una capacidad
+//        velocidadMaxima = 200,//en la trafic es obligatorio asignarle una velocidad maxima 
+        //peso = 2000           //no es necesario asignar un dato por que ya tiene uno por defecto
+//    )
+
+object dependencia {
+
+    var almacen = []
+
+    method almacen() = almacen
+
+    method agregarAFlota(unRodado){
+        almacen.add(unRodado)
+    }
+
+    method quitarDeFlota(unRodado){
+        almacen.remove(unRodado)
+    }
+
+    method pesoTotalFlota(){
+        return almacen.sum({unRodado => unRodado.peso()})
+    }
+
+    method estaBienEquipada() = self.almacen().size() >= 3
+
+    method capacidadTotalEnColor(unColor) {
+        return almacen.count({ unRodado => unRodado.capacidad() == unColor })
+    }
+
+    method colorDelRodadoMasRapido() {
+        return almacen.max({ unRodado => unRodado.velocidadMaxima() }).color()
+    }
+}
 
 
