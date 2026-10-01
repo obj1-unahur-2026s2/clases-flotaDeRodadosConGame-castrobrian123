@@ -1,9 +1,91 @@
-import example.pepita
+import example.*
 
 describe "group of tests for pepita" {
+    
+    test "algo"{
+        const deportes = new Dependencia(empleados = 50)
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
-  }
+        const cultura = new Dependencia(empleados = 31)
+
+        const autoDeporte_1 = new ChevroletCorsa(color ="rojo")
+
+        const autoDeporte_2 = new ChevroletCorsa(color ="azul")
+
+        const autoDeporte_3 = new ChevroletCorsa(color ="verde")
+
+        const autoDeporte_4 = new RenaultKwid(tieneTanqueAdicional = true)
+
+        const autoDeporte_5 =
+            new AutoTrucho(
+                capacidad = 5,
+                velocidadMaxima = 160,
+                peso = 1200,
+                color = "violeta"
+            )
+
+        deportes.agregarAFlota(autoDeporte_1)
+        deportes.agregarAFlota(autoDeporte_2)
+        deportes.agregarAFlota(autoDeporte_3)
+        deportes.agregarAFlota(autoDeporte_4)
+        deportes.agregarAFlota(autoDeporte_5)
+
+        const autoCultura_1 =
+            new RenaultKwid(tieneTanqueAdicional = true)
+
+        const autoCultura_2 =
+            new RenaultKwid(tieneTanqueAdicional = true)
+
+        const autoCultura_3 =
+            new RenaultKwid(tieneTanqueAdicional = false)
+
+        cultura.agregarAFlota(autoDeporte_1)
+        cultura.agregarAFlota(autoCultura_1)
+        cultura.agregarAFlota(autoCultura_2)
+        cultura.agregarAFlota(autoCultura_3)
+
+        // Deportes
+
+        //assert.equals(6450, deportes.pesoTotalFlota())
+
+        assert.that(deportes.estaBienEquipada())
+
+        //assert.equals(7,deportes.capacidadTotalEnColor("azul"))
+
+        //assert.equals("rojo",deportes.colorDelRodadoMasRapido())
+
+        assert.that(deportes.esGrande())
+
+        //assert.equals(25,deportes.capacidadFaltante())
+
+        // Cultura
+
+        //assert.equals(10700, cultura.pesoTotalFlota())
+
+        //assert.notThat(cultura.estaBienEquipada())
+
+        assert.equals(4,cultura.capacidadTotalEnColor("azul"))
+
+        assert.equals("rojo",cultura.colorDelRodadoMasRapido())
+
+        assert.notThat(cultura.esGrande())
+
+    }
+
+    test "cachito puede satisfacer un pedido" {
+
+        const cachito = new ChevroletCorsa(color = "rojo")
+
+        const pedido = 
+            new Pedidos(
+                distancia = 960,
+                tiempoMaximo = 8,
+                pasajeros = 4,
+                coloresIncompatibles = ["azul", "negro"]
+            )
+
+        assert.equals( 120, pedido.velocidad() )
+
+        //assert.that( pedido.puedeSerSatisfechoPor(cachito) )
+    }
 
 }

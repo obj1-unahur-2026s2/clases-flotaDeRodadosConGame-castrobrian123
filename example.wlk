@@ -165,13 +165,13 @@ const autoEspecial_3 =
         //peso = 2000           //no es necesario asignar un dato por que ya tiene uno por defecto
 //    )
 
-object dependencia {
+class Dependencia {
 
     var almacen = []
 
     method almacen() = almacen
 
-    var empleados = 0
+    var empleados
 
     method empleados() = empleados
 
@@ -208,6 +208,63 @@ object dependencia {
     }
 
     method esGrande() = self.empleados() >= 40 and self.almacen().size() >= 5
+
+}
+
+class AutoTrucho {
+    var capacidad
+    var velocidadMaxima
+    var peso
+    var color
+}
+
+class Pedidos {
+
+    var distancia
+
+    method distancia() = distancia
+
+    var tiempoMaximo
+
+    method tiempoMaximo() = tiempoMaximo
+
+    var pasajeros
+
+    method pasajeros() = pasajeros
+
+    var coloresIncompatibles
+
+    method coloresIncompatibles() = coloresIncompatibles
+
+    method velocidad() = distancia / tiempoMaximo
+
+    method velocidadDelAutoEsMayorALaDelPedido(unRodado) { //autoSatisfacePedido()
+        return unRodado.velocidadMaxima() >= self.velocidad() + 10
+    }
+
+    method capacidadDelAutoSoportaPasajeros(unRodado){
+        return unRodado.capacidad() >= self.pasajeros()
+    }
+
+    method esAutoDeColorNoIncompatible(unRodado){
+        return not self.coloresIncompatibles().contains(unRodado.color())
+    }
+
+    method autoSatisfacePedido(unRodado){
+        return
+            self.velocidadDelAutoEsMayorALaDelPedido(unRodado) and
+            self.capacidadDelAutoSoportaPasajeros(unRodado) and
+            self.esAutoDeColorNoIncompatible(unRodado)
+    }
+
+    method acelerar() {
+        tiempoMaximo = tiempoMaximo - 1
+    }
+
+    method relajar() {
+        tiempoMaximo = tiempoMaximo + 1
+    }
+
 
 }
 
